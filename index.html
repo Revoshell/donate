@@ -19,6 +19,9 @@
             justify-content: center;
             align-items: center;
             padding: 1.5rem;
+            /* Включаем аппаратное ускорение */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
         .container {
@@ -27,7 +30,6 @@
             margin: 0 auto;
         }
 
-        /* карточка с заголовком */
         .header {
             text-align: center;
             margin-bottom: 2rem;
@@ -46,31 +48,34 @@
             font-size: 1rem;
         }
 
-        /* сетка кнопок */
         .donation-grid {
             display: flex;
             flex-direction: column;
             gap: 1rem;
         }
 
-        /* стиль одной кнопки-карточки */
+        /* ===== ИСПРАВЛЕНИЯ: убрал backdrop-filter, сделал легче ===== */
         .donation-card {
-            background: rgba(255, 255, 255, 0.07);
-            backdrop-filter: blur(2px);
+            background: rgba(255, 255, 255, 0.08);  /* чуть ярче, без blur */
             border-radius: 28px;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
+            /* аппаратное ускорение */
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
         }
 
-        .donation-card:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 215, 0, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px -10px rgba(0,0,0,0.4);
+        /* Ховер работает только на устройствах с мышкой — на телефонах не тормозит */
+        @media (hover: hover) and (pointer: fine) {
+            .donation-card:hover {
+                background: rgba(255, 255, 255, 0.12);
+                border-color: rgba(255, 215, 0, 0.5);
+                transform: translateY(-3px);
+                box-shadow: 0 12px 25px -10px rgba(0,0,0,0.4);
+            }
         }
 
-        /* сама ссылка занимает весь блок */
         .donation-link {
             display: block;
             text-decoration: none;
@@ -78,7 +83,6 @@
             color: inherit;
         }
 
-        /* контент внутри кнопки */
         .donation-title {
             font-size: 1.6rem;
             font-weight: 700;
@@ -92,7 +96,7 @@
 
         .emoji-badge {
             font-size: 1.8rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            /* убрал drop-shadow — лишняя нагрузка */
         }
 
         .donation-desc {
@@ -104,7 +108,6 @@
             padding-left: 0.75rem;
         }
 
-        /* мини-метка с суммой или просто иконка */
         .price-tag {
             display: inline-block;
             background: rgba(0,0,0,0.35);
@@ -116,23 +119,28 @@
             margin-left: auto;
         }
 
-        /* адаптив: на телефонах чуть меньше отступы */
+        /* адаптив для телефонов — чуть компактнее, меньше прокрутка */
         @media (max-width: 550px) {
             body {
                 padding: 1rem;
             }
             .donation-link {
-                padding: 1rem 1.2rem;
+                padding: 0.9rem 1.2rem;
             }
             .donation-title {
-                font-size: 1.35rem;
+                font-size: 1.3rem;
             }
             .emoji-badge {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
+            }
+            .donation-desc {
+                font-size: 0.85rem;
+            }
+            .header h1 {
+                font-size: 1.8rem;
             }
         }
 
-        /* маленький футер */
         .footer-note {
             text-align: center;
             margin-top: 2.5rem;
@@ -158,7 +166,7 @@
     <div class="footer-note">
         Спасибо за любую поддержку!<br>
         <span style="font-size:0.7rem;">Каждая копейка поможет серверу и разработчику.<br>
-		© Copyright&nbsp;<a href="https://drift-streets.ru/" class="text-primary" target="_blank">RUSSIAN DRIFT STREETS</a>&nbsp<?php echo date("Y");?></span>
+		© Copyright&nbsp;<a href="https://drift-streets.ru/" class="text-primary" target="_blank">RUSSIAN DRIFT STREETS</a>&nbsp;2025</span>
     </div>
 </div>
 
