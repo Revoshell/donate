@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Поддержать проект | Донаты</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e1e2f 0%, #2a2a40 100%);
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* карточка с заголовком */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            color: #b9b9e6;
+            margin-top: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* сетка кнопок */
+        .donation-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* стиль одной кнопки-карточки */
+        .donation-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(2px);
+            border-radius: 28px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .donation-card:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 215, 0, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px -10px rgba(0,0,0,0.4);
+        }
+
+        /* сама ссылка занимает весь блок */
+        .donation-link {
+            display: block;
+            text-decoration: none;
+            padding: 1.2rem 1.5rem;
+            color: inherit;
+        }
+
+        /* контент внутри кнопки */
+        .donation-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #FFE6A7;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .emoji-badge {
+            font-size: 1.8rem;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .donation-desc {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: #cdcdf2;
+            line-height: 1.4;
+            border-left: 2px solid #f5b042;
+            padding-left: 0.75rem;
+        }
+
+        /* мини-метка с суммой или просто иконка */
+        .price-tag {
+            display: inline-block;
+            background: rgba(0,0,0,0.35);
+            border-radius: 40px;
+            padding: 0.2rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #FFD966;
+            margin-left: auto;
+        }
+
+        /* адаптив: на телефонах чуть меньше отступы */
+        @media (max-width: 550px) {
+            body {
+                padding: 1rem;
+            }
+            .donation-link {
+                padding: 1rem 1.2rem;
+            }
+            .donation-title {
+                font-size: 1.35rem;
+            }
+            .emoji-badge {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* маленький футер */
+        .footer-note {
+            text-align: center;
+            margin-top: 2.5rem;
+            font-size: 0.8rem;
+            color: #7a7aac;
+        }
+
+        .footer-note a {
+            color: #c0aaff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>Поддержать Русский Дрифт Сервер</h1>
+        <p>Нажми на любую кнопку — ты сразу перейдёшь к оплате</p>
+    </div>
+
+    <div class="donation-grid" id="donations-list">
+    </div>
+    <div class="footer-note">
+        Спасибо за любую поддержку!<br>
+        <span style="font-size:0.7rem;">Каждая копейка поможет серверу и разработчику.<br>
+		© Copyright&nbsp;<a href="https://drift-streets.ru/" class="text-primary" target="_blank">RUSSIAN DRIFT STREETS</a>&nbsp<?php echo date("Y");?></span>
+    </div>
+</div>
+
+<script>
+    const donationsData = [
+        {
+            title: "Ozon Банк",
+            description: "",
+            url: "https://vk.cc/cVOI8U",
+            emoji: "💲",
+            extraBadge: "Желательно сюда"
+        },
+        {
+            title: "Т-Банк",
+            description: "",
+            url: "https://vk.cc/cFevC3",
+            emoji: "💲",
+            extraBadge: "Сойдёт"
+        },
+        {
+            title: "Сбер",
+            description: "",
+            url: "https://vk.cc/cYJycb",
+            emoji: "💲",
+            extraBadge: "Сойдёт"
+        },
+        {
+            title: "Сказать спасибо (бесплатно)",
+            description: "Не хочешь платить, но можешь поддержать словом? Перейди по ссылке и просто напиши \"Спасибо\" :)",
+            url: "https://t.me/drift_streets",
+            emoji: "💬",
+            extraBadge: "❤️"
+        },
+        {
+            title: "Сайт сервера",
+            description: "Здесь можно найти ссылку на сообщество VK, ознакомиться с услугами и картой сервера.",
+            url: "https://drift-streets.ru",
+            emoji: "🌐",
+            extraBadge: "Используется CloudFlare Security, для входа может потребоваться VPN"
+        }
+    ];
+	
+    function renderDonationButtons() {
+        const container = document.getElementById('donations-list');
+        if (!container) return;
+		
+        container.innerHTML = '';
+		
+        donationsData.forEach(donate => {
+            const card = document.createElement('div');
+            card.className = 'donation-card';
+			
+            const link = document.createElement('a');
+            link.href = donate.url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.className = 'donation-link';
+			
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'donation-title';
+			
+            if (donate.emoji) {
+                const emojiSpan = document.createElement('span');
+                emojiSpan.className = 'emoji-badge';
+                emojiSpan.textContent = donate.emoji;
+                titleDiv.appendChild(emojiSpan);
+            }
+			
+            const titleText = document.createTextNode(donate.title);
+            titleDiv.appendChild(titleText);
+			
+            if (donate.extraBadge) {
+                const badgeSpan = document.createElement('span');
+                badgeSpan.className = 'price-tag';
+                badgeSpan.textContent = donate.extraBadge;
+                titleDiv.appendChild(badgeSpan);
+            }
+			
+            const descDiv = document.createElement('div');
+            descDiv.className = 'donation-desc';
+            descDiv.textContent = donate.description;
+			
+            link.appendChild(titleDiv);
+            link.appendChild(descDiv);
+            card.appendChild(link);
+            container.appendChild(card);
+        });
+    }
+    renderDonationButtons();
+</script>
+</body>
+</html>
